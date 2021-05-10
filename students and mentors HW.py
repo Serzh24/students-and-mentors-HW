@@ -29,15 +29,11 @@ class Student:
         self.middle_grade = round(a / (len(grades)), 1)
         return self.middle_grade
 
-    def compare_mid_gr_st(self, a, b):
-        print('Сравним кто из студентов круче по среднему баллу: ')
-        if a > b:
-            print(f'Ого! {some_student_1.surname} ({a} балла) круче {some_student_2.surname} ({b} балла)!\n')
-        elif a < b:
-            print(f'Ого! {some_student_2.surname} ({a} балла) круче {some_student_1.surname} ({b} балла)!\n')
-        else:
-            print(f'Бывает и такое - оба студента одинаково круты - {a} балла у обоих!\n')
-            return
+    def __lt__(self, other):
+        return self.r > other.r
+
+    def __eq__(self, other):
+        return self.r == other.r
 
     def mid_gr_course(self, students, course):
         a = []
@@ -74,15 +70,11 @@ class Lecturer(Mentor):
         self.middle_grade_lc = round(a / (len(grades_lc)), 1)
         return self.middle_grade_lc
 
-    def compare_mid_gr_lc(self, a, b):
-        print('Сравним кто из лекторов круче по среднему баллу: ')
-        if a > b:
-            print(f'Ого! {some_lecturer_1.surname} ({a} балла) круче {some_lecturer_2.surname} ({b} балла)!\n')
-        elif a < b:
-            print(f'Ого! {some_lecturer_2.surname} ({a} балла) круче {some_lecturer_1.surname} ({b} балла)!\n')
-        else:
-            print(f'Бывает и такое - оба лектора одинаково круты - {a} балла у обоих!\n')
-            return
+    def __lt__(self, other):
+        return self.r > other.r
+
+    def __eq__(self, other):
+        return self.r == other.r
 
     def mid_gr_lectures(self, lecturers, course):
         a = []
@@ -152,10 +144,32 @@ some_student_1.mid_gr()
 some_student_2.mid_gr()
 some_lecturer_1.mid_gr()
 some_lecturer_2.mid_gr()
-some_student_1.compare_mid_gr_st(some_student_1.middle_grade, some_student_2.middle_grade)
-some_lecturer_1.compare_mid_gr_lc(some_lecturer_1.middle_grade_lc, some_lecturer_2.middle_grade_lc)
 some_student_1.mid_gr_course([some_student_1.grades, some_student_2.grades], 'Python')
 some_lecturer_1.mid_gr_lectures([some_lecturer_1.grades_lc, some_lecturer_2.grades_lc], 'Python')
+
+print('Сравним кто из студентов круче по среднему баллу: ')
+compare_lt = (some_student_1.middle_grade > some_student_2.middle_grade)
+compare_eq = (some_student_1.middle_grade == some_student_2.middle_grade)
+if compare_eq == True:
+    print(f'Бывает и такое - оба студента одинаково круты - {some_student_1.middle_grade} балла у обоих!\n')
+elif compare_lt == True:
+    print(f'Ого! {some_student_1.surname} ({some_student_1.middle_grade} балла) '
+          f'круче {some_student_2.surname}({some_student_2.middle_grade} балла)!\n')
+else:
+    print(f'Ого! {some_student_2.surname} ({some_student_2.middle_grade} балла) '
+          f'круче {some_student_1.surname} ({some_student_1.middle_grade} балла)!\n')
+
+print('Сравним кто из лекторов круче по среднему баллу: ')
+compare_lt = (some_lecturer_1.middle_grade_lc > some_lecturer_2.middle_grade_lc)
+compare_eq = (some_lecturer_1.middle_grade_lc == some_lecturer_2.middle_grade_lc)
+if compare_eq == True:
+    print(f'Бывает и такое - оба лектора одинаково круты - {some_lecturer_1.middle_grade_lc} балла у обоих!\n')
+elif compare_lt == True:
+    print(f'Ого! {some_lecturer_1.surname} ({some_lecturer_1.middle_grade_lc} балла) '
+          f'круче {some_lecturer_2.surname}({some_lecturer_2.middle_grade_lc} балла)!\n')
+else:
+    print(f'Ого! {some_lecturer_2.surname} ({some_lecturer_2.middle_grade_lc} балла) '
+          f'круче {some_lecturer_1.surname} ({some_lecturer_1.middle_grade_lc} балла)!\n')
 
 print(f'Оценки студента: {some_student_1.name} {some_student_1.surname} {some_student_1.grades}.')
 print()
